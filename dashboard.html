@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planner Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h1>💰 Budget Planner Dashboard</h1>
+                    <p class="subtitle">Track your income, expenses, and achieve your financial goals</p>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: center;">
+                    <span id="userName" style="color: var(--color-text-secondary); font-weight: 500;"></span>
+                    <button class="btn" style="width: auto; padding: 10px 20px; font-size: 14px;" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">Total Income</div>
+                <div class="card-value income" id="totalIncome">₹0</div>
+                <div class="card-subtitle">This month</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Total Expenses</div>
+                <div class="card-value expense" id="totalExpense">₹0</div>
+                <div class="card-subtitle">This month</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Balance</div>
+                <div class="card-value balance" id="balance">₹0</div>
+                <div class="card-subtitle">Available funds</div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="chart-title">Add Transaction</h2>
+            <form id="transactionForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" required>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="Salary">Salary</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Investment">Investment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" placeholder="Enter details" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Add Transaction</button>
+            </form>
+        </div>
+
+        <div class="form-section savings-goal">
+            <h2 class="chart-title">Savings Goal</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="goalAmount">Goal Amount (₹)</label>
+                    <input type="number" id="goalAmount" min="0" placeholder="e.g., 50000">
+                </div>
+                <div class="form-group">
+                    <label for="goalName">Goal Name</label>
+                    <input type="text" id="goalName" placeholder="e.g., Emergency Fund">
+                </div>
+            </div>
+            <button class="btn" onclick="setSavingsGoal()">Set Goal</button>
+            <div id="goalProgress" style="display:none;">
+                <p><strong id="currentGoalName">Savings Goal</strong></p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                    ₹<span id="currentSavings">0</span> of ₹<span id="goalTarget">0</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2 class="chart-title">Expense Breakdown</h2>
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2 class="chart-title">Monthly Trend</h2>
+            <canvas id="trendChart"></canvas>
+        </div>
+
+        <div class="transactions">
+            <div class="transaction-header">
+                <h2 class="chart-title" style="margin: 0;">Recent Transactions</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="income">Income</button>
+                    <button class="filter-btn" data-filter="expense">Expense</button>
+                </div>
+            </div>
+            <div class="transaction-list" id="transactionList">
+                <div class="empty-state">No transactions yet. Add your first transaction above!</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
